@@ -37,7 +37,15 @@ while True:
             break
         print "received [%s]" % req
 
-        
+        data = None
+        if req in ('temp', '*temp'):
+            data = str(random.random())+'!'
+        else:
+            pass
+
+        if data:
+            print "sending [%s]" % data
+            client_sock.send(data)
 
     except IOError:
         pass
