@@ -6,9 +6,9 @@ node {
         credentialsId: 'bac1be3b-5d3a-4657-947a-55b44a7250bb'
    }
    stage('Unitary Test') {
-       sh ""
+       //sh "python3 -m unittest tests/carDashboardServiceTest.py"
    }
    stage('Deployment On Cars'){
-       sh ''
+       sh 'sshpass -p \"raspberry\" scp -r pi@127.16.0.25:/home/pi/Desktop/pds /home/pi/Desktop/pds/sandbox/git'
    }
 }
