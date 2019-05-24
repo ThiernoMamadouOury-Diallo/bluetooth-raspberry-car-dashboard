@@ -13,7 +13,6 @@ import time
 import logging
 
 from bluetooth import *
-from services.carDashboardService import *
 
 server_sock = BluetoothSocket( RFCOMM )
 server_sock.bind(("",PORT_ANY))
@@ -34,9 +33,9 @@ advertise_service( server_sock, "CarDashboard",
 
 logging.info("Waiting for connection on RFCOMM channel %d" % port)
 client_sock, client_info = server_sock.accept()
-logging.info("Accepted connection from ", client_info)
+logging.info("Accepted connection from %s", client_info ) 
 
-while True:          
+while True:
 
     try:
         req = client_sock.recv(1024)
@@ -45,19 +44,20 @@ while True:
         logging.info("received [%s]" % req)
 
         data = None
-        if req in ('USER_ID AA-000-ZZ'):
+        if req in ('1 AA-000-ZZ'):
             data = "Bienvenue a bord"
             client_sock.send(data)
 
         while True:
-           time.sleep(5)
-           rd = random.randint(1,101) % 2
-           if rd == 1:
-             data = getFluelLevel()
-           elif rd == 0:
-             data = getEngineTemperature()
-           logging("sending [%s]" % data)
-           client_sock.send(data)
+            time.sleep(5)
+            rd = random.randint(1,101) % 2
+            if rd == 1:
+                data = "Niveau du carburant est de %s Litre" % str(random.randint(5,70))
+            elif rd == 0:
+                data = "La temperature du moteur est de %s Celsius" % str(random.randint(10, 120))
+
+            logging.info("sending [%s]" % data)
+            client_sock.send(data)
 
     except IOError:
         pass
@@ -71,3 +71,5 @@ while True:
         logging.info("all done")
 
         break
+
+
