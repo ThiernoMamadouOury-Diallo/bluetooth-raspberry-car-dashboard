@@ -1,0 +1,14 @@
+node {
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+      git branch: 'master',
+        url: 'http://gitlab.tas.inside.esiag.info/PDSING3/bluetooth-raspberry-car-dashboard.git',
+        credentialsId: 'bac1be3b-5d3a-4657-947a-55b44a7250bb'
+   }
+   stage('Unitary Test') {
+       sh ""
+   }
+   stage('Deployment On Cars'){
+       sh ''
+   }
+}
